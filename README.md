@@ -1,2 +1,1 @@
-A sample command-line application with an entrypoint in `bin/`, library code
-in `lib/`, and example unit test in `test/`.
+# Port Of `bloc_signals_flutter` ==> `bloc_signals_dn`
