@@ -9,7 +9,7 @@ environment:
 
 # Add regular dependencies here.
 dependencies:
-  dartnative: ^1.0.0 #TODO: Change the version
+  dartnative: ^1.0.0 
   signals_core:
     hosted: https://pub.dev
     version: ^7.0.0

@@ -77,9 +77,8 @@ class BlocSignalProvider<T extends BlocSignalBase<dynamic>>
          //  the context handed to a list or grid item
          // builder sits outside the element tree, so both lookups return null
          // there. Read the value inside the item's own widget instead.
-            .getElementForInheritedWidgetOfExactType<
-                _BlocSignalProviderInherited<T>>()
-            ?.widget as _BlocSignalProviderInherited<T>?;
+            .getInheritedWidgetOfExactType<
+                _BlocSignalProviderInherited<T>>();
     if (provider == null) {
       throw StateError(
         'BlocSignalProvider.of() called with a context that does not contain '
