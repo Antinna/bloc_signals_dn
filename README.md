@@ -24,7 +24,7 @@ DartNative UI layer
 
 rather than introducing DartNative-specific state abstractions throughout the application.
 # Extra Care
-- `signals_core` and `signals_core_extended` use the same primitive types forsignals, computeds and effects. But they are not interchangeable with DartNative implementation.
+- `signals_core` and `signals_core_extended` use the same primitive types for signals, computeds and effects. But they are not interchangeable with DartNative implementation.
 - `bloc_signals_flutter` uses the same API with `signals_flutter`.
 - So the only way to use **BlocSignal** with DartNative is to use `signals_core` and `signals_core_extended` in place of DartNative state related reactive paradigm like  `signal` (Signal), `effect` (Effect), `Computed` (Computed), `computed` (Computed), and so, 
 ```dart
