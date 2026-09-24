@@ -6,7 +6,7 @@ The goal of this package is to bring the `BlocSignal` widget APIs to DartNative 
 
 ## Why this package?
 
-DartNative provides its own reactive and state-related primitives, including features such as signals, computed values, and effects.
+DartNative provides its own reactive and state-related primitives, including features such as signals, computed values, effects, and context-based reactive APIs.
 
 This package intentionally **does not replace `BlocSignal` with DartNative's state-management approach**.
 
@@ -23,21 +23,65 @@ DartNative UI layer
 ```
 
 rather than introducing DartNative-specific state abstractions throughout the application.
-# Extra Care
-- `signals_core` and `signals_core_extended` use the same primitive types for signals, computeds and effects. But they are not interchangeable with DartNative implementation.
-- `bloc_signals_flutter` uses the same API with `signals_flutter`.
-- So the only way to use **BlocSignal** with DartNative is to use `signals_core` and `signals_core_extended` in place of DartNative state related reactive paradigm like  `signal` (Signal), `effect` (Effect), `Computed` (Computed), `computed` (Computed), and so, 
+
+## Extra Care: Avoid DartNative's Default State APIs
+
+`signals_core` and `signals_core_extended` expose compatible reactive primitives such as:
+
+```text
+signal<T>()
+computed()
+effect()
+```
+
+These APIs may look similar to DartNative's own reactive primitives, but they are **not the same implementation or state-management layer**.
+
+Likewise, `bloc_signals_flutter` uses the corresponding signal APIs from `signals_flutter`.
+
+For `bloc_signals_dn`, the `BlocSignal` state-management layer should continue to use the `signals_core` ecosystem rather than DartNative's built-in reactive state paradigm.
+
+In particular, avoid using DartNative's state-management APIs as an alternative to `BlocSignal`, such as:
+
+```text
+signal<T>()
+Signal
+effect()
+Effect
+Computed
+computed()
+context.watch(...)
+context.read(...)
+```
+
+when those APIs are being used to manage application state.
+
+Instead, use the `signals_core` APIs exposed by this package:
+
 ```dart
-// for `signals_core` API's
+// For signals_core APIs:
 import 'package:bloc_signals_dn/signals_core.dart';
-// for `signals_core_extended` API's
+
+// For signals_core_extended APIs:
 import 'package:bloc_signals_dn/signals_core_extended.dart';
 ```
+
+This keeps the application's state-management model based on:
+
+```text
+BlocSignal
+    ↓
+signals_core / signals_core_extended
+```
+
+while DartNative remains responsible for the UI and framework integration.
+
+> **Note:** `bloc_signals_dn` may internally use reactive primitives such as `computed()` and `effect()` where required to implement selectors, listeners, and widget updates. This is an implementation detail of the package and does not mean that applications should adopt DartNative's separate state-management model.
+
 ## Compatibility
 
 This package is intended to provide an API that is as close as practical to `bloc_signals_flutter`.
 
-Where DartNative exposes a different framework API, the implementation uses the DartNative equivalent while preserving the original semantics where possible.
+Where DartNative exposes a different framework API, the implementation uses the corresponding DartNative API while preserving the original semantics wherever possible.
 
 ## Design principle
 
